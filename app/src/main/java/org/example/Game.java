@@ -6,6 +6,10 @@ public class Game {
   private Result status = Result.IN_PROGRESS;
 
   public Game(Board board) { this.board = board; }
+  public Game(Board board, char starting) {
+    this.board = board;
+    this.current = starting;
+  }
 
   public char getCurrentPlayer() { return current; }
   public Result getStatus() { return status; }
@@ -13,7 +17,7 @@ public class Game {
 
   public boolean tryMove(int zeroBasedIndex) {
     if (status != Result.IN_PROGRESS) return false;
-   
+
     boolean placed;
     try { placed = board.place(zeroBasedIndex, current); }
     catch (IndexOutOfBoundsException e) { return false; }
