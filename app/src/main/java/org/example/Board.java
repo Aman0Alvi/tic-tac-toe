@@ -1,6 +1,8 @@
 package org.example;
 
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
   private final char[] cells = new char[9]; 
@@ -49,5 +51,26 @@ public class Board {
 
   private void checkIndex(int idx) {
     if (idx < 0 || idx >= 9) throw new IndexOutOfBoundsException("cell " + idx);
+  }
+
+  public int movesPlayed() {
+    int count = 0;
+    for (char c : cells) if (c != ' ') count++;
+    return count;
+  }
+
+  public List<Integer> emptyIndices() {
+    List<Integer> res = new ArrayList<>();
+    for (int i = 0; i < 9; i++) if (cells[i] == ' ') res.add(i);
+    return res;
+  }
+
+  public boolean wouldWinIfPlaced(int idx, char player) {
+    if (!isEmpty(idx)) return false;
+    char old = cells[idx];
+    cells[idx] = player;
+    boolean win = hasWinner();
+    cells[idx] = old;
+    return win;
   }
 }
